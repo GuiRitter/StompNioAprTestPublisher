@@ -1,0 +1,31 @@
+package com.example.demo;
+
+import java.util.TimeZone;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
+@SpringBootApplication
+@EnableAutoConfiguration(exclude=ErrorMvcAutoConfiguration.class)
+public class Application extends SpringBootServletInitializer {
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(Application.class);
+	}
+
+	@PostConstruct
+	void started() {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	}
+
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
+}
